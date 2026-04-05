@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Blog - Commute By Bike{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Blog</h1>
+
+{% for post in post_list %}
+<div class="card mb-3">
+    <div class="card-body">
+        <h2 class="card-title h5">
+            <a class="text-decoration-none" href="{% url 'blog:detail' post.pk %}">{{ post.title }}</a>
+        </h2>
+        <p class="card-text text-body-secondary small">{{ post.date_posted|date:"F j, Y" }}</p>
+        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+        <a href="{% url 'blog:detail' post.pk %}" class="btn btn-sm btn-outline-secondary">Read more</a>
+    </div>
+</div>
+{% empty %}
+<p class="text-body-secondary">No posts yet.</p>
+{% endfor %}
+
+{% if is_paginated %}
+<nav aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Previous</span></li>
+        {% endif %}
+
+        <li class="page-item disabled">
+            <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+        </li>
+
+        {% if page_obj.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled"><span class="page-link">Next</span></li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+{% endblock %}

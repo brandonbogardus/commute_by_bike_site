@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - Commute By Bike{% endblock %}
+
+{% block content %}
+<article>
+    <h1 class="mb-1">{{ post.title }}</h1>
+    <p class="text-body-secondary small mb-4">{{ post.date_posted|date:"F j, Y" }}</p>
+    <div>{{ post.content|linebreaks }}</div>
+</article>
+
+<a href="{% url 'blog:index' %}" class="btn btn-outline-secondary mt-4">&larr; Back to blog</a>
+{% endblock %}
