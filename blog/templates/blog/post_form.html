@@ -7,7 +7,7 @@
 
 <div class="card mb-3">
     <div class="card-body">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="mb-3">
                 <label for="{{ form.title.id_for_label }}" class="form-label">{{ form.title.label }}</label>
@@ -23,6 +23,20 @@
                 <div class="invalid-feedback d-block">{{ form.content.errors }}</div>
                 {% endif %}
             </div>
+            <hr>
+            <h5>Images</h5>
+            {{ image_formset.management_form }}
+            {% for image_form in image_formset %}
+            <div class="mb-3">
+                {{ image_form.image.label_tag }}
+                {{ image_form.image }}
+                {{ image_form.caption.label_tag }}
+                {{ image_form.caption }}
+                {% if image_formset.can_delete %}
+                    {{ image_form.DELETE.label_tag }} {{ image_form.DELETE }}
+                {% endif %}
+            </div>
+            {% endfor %}
             <button type="submit" class="btn btn-outline-secondary">Publish</button>
         </form>
     </div>
