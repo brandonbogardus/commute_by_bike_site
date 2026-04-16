@@ -9,23 +9,23 @@ https://docs.djangoproject.com/en/6.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
-import os
-from pathlib import Path
+import os                                                                           # imports the os module, which provides a way of using operating system dependent functionality
+from pathlib import Path                                                            # imports the Path class from the pathlib module, which provides an object-oriented interface for working with filesystem paths     
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent                                   # sets the BASE_DIR variable to the parent directory of the parent directory of the current file (settings.py), which is the root directory of the project
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-63(k@f%-+it#f=botgqj8++byze#ure_symdkp9rm(2%aas1)_"
+SECRET_KEY = "django-insecure-63(k@f%-+it#f=botgqj8++byze#ure_symdkp9rm(2%aas1)_"  # sets the SECRET_KEY variable to a string that is used for cryptographic signing in Django. This key should be kept secret in production environments, as it is used to protect against certain types of attacks.
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = True                                                                       # set the DEBUG variable to True, which enables debug mode in Django. This should be set to False in production environments for security reasons.
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []                                                                  # sets the ALLOWED_HOSTS variable to an empty list, which means that the application will only be accessible from the local machine. In production, this should be set to a list of allowed hostnames or IP addresses.  
 
 
 # Application definition
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "commute_by_bike_site.urls"
+ROOT_URLCONF = "commute_by_bike_site.urls"                                              # sets the ROOT_URLCONF variable to the string "commute_by_bike_site.urls", which tells Django to look for the URL configuration in the urls.py file located in the commute_by_bike_site directory. 
 
 TEMPLATES = [
     {
@@ -119,7 +119,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "static/"                                                          # sets the STATIC_URL variable to the string "static/", which is the URL prefix for static files in Django. This means that when you reference static files in your templates, you should use this prefix (e.g., {% static 'css/style.css' %}).   
 
 
 LOGIN_URL = "users:login"
