@@ -21,6 +21,7 @@ class Post(models.Model):
 
 
 class PostImage(models.Model):
+    """Model for post image. """
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to="post_images/")
     caption = models.CharField(max_length=255, blank=True)
