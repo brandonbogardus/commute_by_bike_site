@@ -7,11 +7,10 @@ from .forms import PostForm, PostImageFormSet
 from .models import Post
 
 
-class BlogListView(ListView):
+class BlogListView(ListView):                               # generic list view
     model = Post
-    ordering = ["-date_posted"]
-    paginate_by = 5
-    template_name = "blog/index.html"
+    ordering = ["-date_posted"]                             # order by date posted, newest first
+    paginate_by = 5                                         # paginate with 5 posts per page
 
 
 class BlogDetailView(DetailView):
@@ -21,12 +20,12 @@ class BlogDetailView(DetailView):
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = PostForm
-    template_name = "blog/post_form.html"
+    template_name = "blog/post_form.html"                   # Specify the form class for handling post creation/editing
 
     def form_valid(self, form):
-        form.instance.author = self.request.user  # 1. Assign the logged-in user as author
-        self.object = form.save()                 # 2. Save the Post first (formset needs its PK)
-        formset = PostImageFormSet(               # 3. Bind the formset to the saved Post
+        form.instance.author = self.request.user            # 1. Assign the logged-in user as author
+        self.object = form.save()                           # 2. Save the Post first (formset needs its PK)
+        formset = PostImageFormSet(                         # 3. Bind the formset to the saved Post
             self.request.POST,
             self.request.FILES,
             instance=self.object

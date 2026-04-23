@@ -16,7 +16,7 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
-    def get_absolute_url(self):
+    def get_absolute_url(self):                                                  # This method is used to get the URL for the detail view of the post. It uses the reverse function to generate the URL based on the name of the URL pattern and the primary key of the post.
         return reverse("blog:detail", kwargs={"pk": self.pk})
 
 
