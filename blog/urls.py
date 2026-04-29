@@ -4,9 +4,8 @@ from .views import BlogListView, BlogDetailView, BlogPostCreateView
 app_name = "blog"
 
 urlpatterns = [
-    # blog index
-    path("", BlogListView.as_view(), name="index"),
-    path("<int:pk>/", BlogDetailView.as_view(), name="detail"),
-    path("new/", BlogPostCreateView.as_view(), name="create"),
+    path("", BlogListView.as_view(), name="index"),                         # index url
+    path("<int:pk>/", BlogDetailView.as_view(), name="detail"),             # detail url
+    path("new/", BlogPostCreateView.as_view(), name="create"),              # new post url
 ]
 

@@ -16,7 +16,7 @@ class Post(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse("blog:detail", kwargs={"pk": self.pk})     #returns the blog detail page
+        return reverse("blog:detail", kwargs={"pk": self.pk})
 
 class PostImage(models.Model):
     """Model for post image. """
