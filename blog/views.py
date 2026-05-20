@@ -19,8 +19,8 @@ class BlogDetailView(DetailView):
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    form_class = PostForm
-    template_name = "blog/post_form.html"                   # Specify the form class for handling post creation/editing
+    form_class = PostForm                                   # Specify the form class for handling post creation/editing
+    template_name = "blog/post_form.html"                   
 
     def form_valid(self, form):
         form.instance.author = self.request.user            # 1. Assign the logged-in user as author
