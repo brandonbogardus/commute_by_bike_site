@@ -76,6 +76,12 @@ class BlogPostCreateViewTests(TestCase):
         self.assertEqual(response.status_code, 302)
 
 
+    def test_blog_create_view_redireects_to_detail_for_authorized(self):
+        self.client.login(username="testuser", password="password123")
+        response = self.client.post("/new/", data={"title": "New Post", "content": "New Content"})
+        self.assertRedirects(response, "/1/" )
+
+
     def test_blog_create_view_new_post(self):
         self.client.login(username="testuser", password="password123")
         response = self.client.post("/new/", data={"title": "New Post", "content": "New Content"})
