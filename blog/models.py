@@ -18,8 +18,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("blog:detail", kwargs={"pk": self.pk})
 
+
 class PostImage(models.Model):
-    """Model for post image."""
+    """Model for storing images associated with each blog post."""
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="images")
     image = models.ImageField(upload_to="post_images/")
     caption = models.CharField(max_length=255, blank=True)
