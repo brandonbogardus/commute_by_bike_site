@@ -13,7 +13,7 @@ class BlogListView(ListView):                               # generic list view
     paginate_by = 5                                         # paginate with 5 posts per page
 
 
-class BlogDetailView(DetailView):
+class BlogDetailView(DetailView):                           # generic detail view     
     model = Post
 
 
