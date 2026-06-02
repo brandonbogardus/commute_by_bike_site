@@ -21,15 +21,15 @@ class BlogListViewTests(TestCase):
         )
 
     def test_blog_list_view(self):
-        response = self.client.get("/")
+        response = self.client.get("/blog/")
         self.assertEqual(response.status_code, 200)
 
     def test_blog_list_view_template(self):
-        response = self.client.get("/")
+        response = self.client.get("/blog/")
         self.assertTemplateUsed(response, "blog/post_list.html")
 
     def test_blog_list_view_contains_post(self):
-        response = self.client.get("/")
+        response = self.client.get("/blog/")
         self.assertIn(self.post, response.context["object_list"])
 
 
@@ -48,11 +48,11 @@ class BlogDetailViewTests(TestCase):
         )
 
     def test_blog_detail_view(self):
-        response = self.client.get(f"/{self.post.pk}/")
+        response = self.client.get(f"/blog/{self.post.pk}/")
         self.assertEqual(response.status_code, 200)
 
     def test_blog_detail_view_template(self):
-        response = self.client.get(f"/{self.post.pk}/")
+        response = self.client.get(f"/blog/{self.post.pk}/")
         self.assertTemplateUsed(response, "blog/post_detail.html")
 
 
@@ -64,25 +64,25 @@ class BlogPostCreateViewTests(TestCase):
             password="password123",
         )
 
-
     def test_blog_create_view_with_loggedin_user(self):
         self.client.login(username="testuser", password="password123")
-        response = self.client.get("/new/")
+        response = self.client.get("/blog/new/")
         self.assertEqual(response.status_code, 200)
 
-
     def test_blog_create_view_redirect_for_unauthorized(self):
-        response = self.client.get("/new/")
+        response = self.client.get("/blog/new/")
         self.assertEqual(response.status_code, 302)
-
 
     def test_blog_create_view_redireects_to_detail_for_authorized(self):
         self.client.login(username="testuser", password="password123")
-        response = self.client.post("/new/", data={"title": "New Post", "content": "New Content"})
-        self.assertRedirects(response, "/1/" )
-
+        response = self.client.post(
+            "/blog/new/", data={"title": "New Post", "content": "New Content"}
+        )
+        self.assertRedirects(response, "/blog/1/")
 
     def test_blog_create_view_new_post(self):
         self.client.login(username="testuser", password="password123")
-        response = self.client.post("/new/", data={"title": "New Post", "content": "New Content"})
+        response = self.client.post(
+            "/blog/new/", data={"title": "New Post", "content": "New Content"}
+        )
         self.assertTrue(Post.objects.filter(title="New Post").exists())

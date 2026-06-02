@@ -23,7 +23,7 @@ class PostModelTests(TestCase):
         self.assertEqual(self.post.__str__(), "Test Post")
 
     def test_get_absolute_url(self):
-        self.assertEqual(self.post.get_absolute_url(), f"/{self.post.pk}/")
+        self.assertEqual(self.post.get_absolute_url(), f"/blog/{self.post.pk}/")
 
 
 class PostImageModelTests(TestCase):
