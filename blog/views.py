@@ -7,34 +7,38 @@ from .forms import PostForm, PostImageFormSet
 from .models import Post
 
 
-class BlogListView(ListView):                               # generic list view
+class BlogListView(ListView):  # generic list view
     model = Post
-    ordering = ["-date_posted"]                             # order by date posted, newest first
-    paginate_by = 5                                         # paginate with 5 posts per page
+    ordering = ["-date_posted"]  # order by date posted, newest first
+    paginate_by = 5  # paginate with 5 posts per page
 
 
-class BlogDetailView(DetailView):                           # generic detail view     
+class BlogDetailView(DetailView):  # generic detail view
     model = Post
 
 
 class BlogPostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    form_class = PostForm                                   # Specify the form class for handling post creation/editing
-    template_name = "blog/post_form.html"                   
+    form_class = PostForm  # Specify the form class for handling post creation/editing
+    template_name = "blog/post_form.html"
 
     def form_valid(self, form):
-        form.instance.author = self.request.user            # 1. Assign the logged-in user as author
-        self.object = form.save()                           # 2. Save the Post first (formset needs its PK)
-        formset = PostImageFormSet(                         # 3. Bind the formset to the saved Post
-            self.request.POST,
-            self.request.FILES,
-            instance=self.object
+        form.instance.author = (
+            self.request.user
+        )  # 1. Assign the logged-in user as author
+        self.object = form.save()  # 2. Save the Post first (formset needs its PK)
+        formset = PostImageFormSet(  # 3. Bind the formset to the saved Post
+            self.request.POST, self.request.FILES, instance=self.object
         )
         if formset.is_valid():
-            formset.save()                                  # 4. Save the images
-        return redirect(self.object.get_absolute_url())     # 5. Redirect manually
+            formset.save()  # 4. Save the images
+        return redirect(self.object.get_absolute_url())  # 5. Redirect manually
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)       # 1. Get everything the default provides
-        context["image_formset"] = PostImageFormSet()      # 2. Add a blank formset on top of it
+        context = super().get_context_data(
+            **kwargs
+        )  # 1. Get everything the default provides
+        context["image_formset"] = (
+            PostImageFormSet()
+        )  # 2. Add a blank formset on top of it
         return context
