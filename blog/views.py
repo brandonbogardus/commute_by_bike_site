@@ -27,9 +27,9 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
             self.request.user
         )  # 1. Assign the logged-in user as author
         self.object = form.save()  # 2. Save the Post first (formset needs its PK)
-        formset = PostImageFormSet(  # 3. Bind the formset to the saved Post
+        formset = PostImageFormSet(
             self.request.POST, self.request.FILES, instance=self.object
-        )
+        )  # 3. Bind the formset to the saved Post
         if formset.is_valid():
             formset.save()  # 4. Save the images
         return redirect(self.object.get_absolute_url())  # 5. Redirect manually
