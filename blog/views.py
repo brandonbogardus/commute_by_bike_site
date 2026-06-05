@@ -23,9 +23,7 @@ class BlogPostCreateView(LoginRequiredMixin, CreateView):
     template_name = "blog/post_form.html"
 
     def form_valid(self, form):
-        form.instance.author = (
-            self.request.user
-        )  # 1. Assign the logged-in user as author
+        form.instance.author = self.request.user    # 1. Assign the logged-in user as author
         self.object = form.save()  # 2. Save the Post first (formset needs its PK)
         formset = PostImageFormSet(
             self.request.POST, self.request.FILES, instance=self.object
