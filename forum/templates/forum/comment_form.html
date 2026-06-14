@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block title %}Add Comment - Commute By Bike{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Add Comment</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.content.id_for_label }}" class="form-label">{{ form.content.label }}</label>
+                {{ form.content }}
+                {% if form.content.errors %}
+                <div class="invalid-feedback d-block">{{ form.content.errors }}</div>
+                {% endif %}
+            </div>
+            <button type="submit" class="btn btn-outline-secondary">Post Comment</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

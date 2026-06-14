@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Delete Thread - Commute By Bike{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Delete Thread</h1>
+
+<div class="card mb-3">
+    <div class="card-body">
+        <p>Are you sure you want to delete <strong>{{ object.title }}</strong>? This will also delete all comments in the thread.</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Yes, delete</button>
+            <a href="{% url 'forum:thread' object.pk %}" class="btn btn-outline-secondary ms-2">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}
