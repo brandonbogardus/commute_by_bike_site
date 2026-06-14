@@ -50,3 +50,7 @@ class ForumAddCommentView(LoginRequiredMixin, CreateView):
         
 
 class ForumDeleteCommentView(LoginRequiredMixin, DeleteView):
+    model = Comment
+    def get_success_url(self):
+        return reverse_lazy("forum:thread", kwargs={"pk":self.object.thread.pk})
+    
