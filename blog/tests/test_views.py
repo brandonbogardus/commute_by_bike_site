@@ -6,7 +6,6 @@ User = get_user_model()
 
 
 class BlogListViewTests(TestCase):
-
     @classmethod
     def setUpTestData(cls):
         cls.user = User.objects.create_user(

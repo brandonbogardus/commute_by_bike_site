@@ -18,8 +18,8 @@ class ForumThreadView(DetailView):
     model = Thread
 
     def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)  # get the Thread context data
-        context["comments"] = self.object.comments.all() # add comments via "related_name" in Thread foreighkey on Comment model
+        context = super().get_context_data(**kwargs)  # get the normal Thread context data
+        context["comments"] = self.object.comments.all() # add comments to context via "related_name" in Thread foreignkey on Comment model
         return context
     
 class ForumThreadCreateView(LoginRequiredMixin, CreateView):
