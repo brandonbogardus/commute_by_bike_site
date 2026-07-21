@@ -43,6 +43,12 @@ class ForumDetailViewTests(TestCase):
             author=cls.user,
         )
 
+        cls.comment = Comment.objects.create(
+            content="Test comment.",
+            author=cls.user,
+            thread=cls.thread,
+        )
+
     def test_forum_detail_view(self):
         response = self.client.get(f"/forum/{self.thread.pk}/")
         self.assertEqual(response.status_code, 200)
@@ -50,3 +56,11 @@ class ForumDetailViewTests(TestCase):
     def test_forum_detail_view_template(self):
         response = self.client.get(f"/forum/{self.thread.pk}/")
         self.assertTemplateUsed(response, "forum/thread_detail.html")
+
+    def test_forum_detail_view_contains_comment(self):
+        response = self.client.get(f"/forum/{self.thread.pk}/")
+        self.assertIn(self.comment, response.context["comments"])
+
+    def test_forum_detail_view_nonexistent(self):
+        response = self.client.get(f"/forum/{self.thread.pk + 1}/")
+        self.assertEqual(response.status_code, 404)
