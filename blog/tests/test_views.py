@@ -63,25 +63,28 @@ class BlogPostCreateViewTests(TestCase):
             password="password123",
         )
 
-    def test_blog_create_view_with_loggedin_user(self):
+    def test_blog_post_create_view_with_loggedin_user(self):
         self.client.login(username="testuser", password="password123")
         response = self.client.get("/blog/new/")
         self.assertEqual(response.status_code, 200)
 
-    def test_blog_create_view_redirect_for_unauthorized(self):
+    def test_blog_post_create_view_redirect_for_unauthorized(self):
         response = self.client.get("/blog/new/")
         self.assertEqual(response.status_code, 302)
 
-    def test_blog_create_view_redireects_to_detail_for_authorized(self):
+    def test_blog_post_create_view_redireects_to_detail_for_authorized(self):
         self.client.login(username="testuser", password="password123")
         response = self.client.post(
             "/blog/new/", data={"title": "New Post", "content": "New Content"}
         )
         self.assertRedirects(response, "/blog/1/")
 
-    def test_blog_create_view_new_post(self):
+    def test_blog_post_create_view_new_post_exists(self):
         self.client.login(username="testuser", password="password123")
         response = self.client.post(
             "/blog/new/", data={"title": "New Post", "content": "New Content"}
         )
         self.assertTrue(Post.objects.filter(title="New Post").exists())
+
+
+# TODO: remove hardcoded url references using reverse
